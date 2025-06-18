@@ -36,27 +36,25 @@
     <button type="submit">Submit</button>
   </form>
 
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyY24RyhqDHBsytC_-lqLjqoIYv1AUtw2QecnbTGYeAJH_nKd70gkSnwJ6XrUdRhrcepw/exec";
+<script>
+  const scriptURL = "https://script.google.com/macros/s/AKfycbyY24RyhqDHBsytC_-lqLjqoIYv1AUtw2QecnbTGYeAJH_nKd70gkSnwJ6XrUdRhrcepw/exec";
 
-    document.getElementById("recordForm").addEventListener("submit", e => {
-      e.preventDefault();
+  document.getElementById("recordForm").addEventListener("submit", e => {
+    e.preventDefault();
 
-      const data = {
-        firstName: document.getElementById("firstName").value,
-        lastName: document.getElementById("lastName").value,
-        age: document.getElementById("age").value
-      };
+    const formData = new FormData();
+    formData.append("firstName", document.getElementById("firstName").value);
+    formData.append("lastName", document.getElementById("lastName").value);
+    formData.append("age", document.getElementById("age").value);
 
-      fetch(scriptURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(result => alert("Submitted successfully!"))
-      .catch(error => alert("Error: " + error.message));
-    });
-  </script>
+    fetch(scriptURL, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(result => alert("Submitted successfully!"))
+    .catch(error => alert("Error: " + error.message));
+  });
+</script>
 </body>
 </html>
